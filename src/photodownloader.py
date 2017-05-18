@@ -1,39 +1,44 @@
 import urlretriever
 import urllib
 import logging
+import os
+import config
 
 class PhotoDownloader:
     
     
     def __init__(self):
         self.PHOTO_DICT = urlretriever.UrlRetriever().photo_list()
-        print(self.PHOTO_DICT)
-        self.DEFAULT_PATH = ''
-        
-    
-    def folder_forming(self):
-        for key in self.PHOTO_DICT:
-            self.DEFAULT_PATH = os.path.join(str(os.path.realpath(os.path.dirname(sys.argv[0]))),
-                                                 'out', key)
-            logging.info("Path created: {}".format(self.DEFAULT_PATH))
-            yield self.DEFAULT_PATH
+        self.DEFAULT_PATH = config.DEFAULT_PATH
+        self.DEFAULT_FORMAT = config.DEFAULT_FORMAT
 
 
     def photo_downloading(self):
+        print('Path to photo downloading:')
+        print(self.DEFAULT_PATH)
+        print('Start downloading')
         try:
+            print('Downloading albums:')
             for key in self.PHOTO_DICT:
+                counter = 0 
                 print(key)
-                path = self.DEFAULT_PATH
-                counter = 0
                 for item in self.PHOTO_DICT[key]:
-                    photo = urllib.request.urlopen(self.PHOTO_DICT[key][item]).read()
-                    output_file = open(path.join(self.PHOTO_DICT[key]),
+                    photo = urllib.request.urlopen(item).read()
+                    output_file = open(os.path.join(self.DEFAULT_PATH, str(key) +
+                                                    str(counter) + self.DEFAULT_FORMAT),
                                        "wb")
                     output_file.write(photo)
                     output_file.close()
                     counter += 1
-                    logging.info("Photo saved: {}".format(self.PHOTO_DICT[key][item]))
-                return True
+                    logging.info("Photo saved: {}".format(item))
+            print('Downoading succesfully complete!')
+            return True
         except Exception as e:
             logging.exception("Error occured: {}".format(e))
             return False
+
+
+    def __folder_forming(self, key):
+        path = self.DEFAULT_PATH.join('join')
+        
+        return(path)

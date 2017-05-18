@@ -14,7 +14,14 @@ METHOD_GETALBUMS='photos.getAlbums'
 METHOD_GETALBUMPHOTOS='photos.get'
 
 # photo resolution configurating
-PHOTO_RESOLUTION = ('photo_807', 'photo_1280', 'photo_2560')
+PHOTO_RESOLUTION = ('photo_75',
+                    'photo_130',
+                    'photo_604')
+
+OUTPUT_FOLDER = 'out'
+
+DEFAULT_PATH = ''
+DEFAULT_FORMAT = '.jpg'
 
 # 0 - method name; 1 - parameters; 2 - token; 3 - version
 method_name='https://api.vk.com/method/{0}?owner_id={1}{2}&access_token={3}&v={4}'

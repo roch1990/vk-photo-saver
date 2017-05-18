@@ -34,6 +34,7 @@ class UrlRetriever:
                                                      self.RESPONSE_TYPE,
                                                      self.V,
                                                      self.REVOKE)
+        return self.TOKEN_STRING
 
 
     def albums_list(self):
@@ -47,6 +48,7 @@ class UrlRetriever:
                                 json_data['response']['items'][counter]['title']
                 counter += 1
             logging.info("Album formed: {}".format(self.ALBUM_DICT))
+            print('Album list retrieving - done')
             return self.ALBUM_DICT
         except Exception as e:
             logging.critical("Error occured: {}".format(e))
@@ -57,21 +59,31 @@ class UrlRetriever:
         '''Don't do like this'''
         counter = 0
         number = 0
+        number_of_photos = 0
         key = ''
         photo_json = {}
         photo_list = []
         self.ALBUM_DICT = self.albums_list()
+        print('Retrieving of photo list in progress')
         try:
             for item in (self.ALBUM_DICT):
                 # filling photo_json list from album
+                photo_list = []
+                number = 0
                 photo_json = self.__vk_api_photo_json(item)
-                while number < (int(photo_json['response']['count'])):
+                try:
+                    number_of_photos = int(photo_json['response']['count'])
+                except Exception as e:
+                    print(photo_json['error'])
+                    print('\n\nPlease try again later!')
+                while number < number_of_photos:
                     for key in photo_json['response']['items'][number]:
-                        if key in self.PHOTO_RESOLUTION:  
+                        if key in self.PHOTO_RESOLUTION:
                             photo_list.append(photo_json['response']['items'][number][key])
-                    self.PHOTO_DICT[self.ALBUM_DICT[item]] = photo_list
                     number += 1
-                    logging.info("Item:".format(self.PHOTO_DICT[self.ALBUM_DICT[item]]))
+                self.PHOTO_DICT[self.ALBUM_DICT[item]] = photo_list
+                logging.info("Item:".format(self.PHOTO_DICT[self.ALBUM_DICT[item]]))
+            print('Photo list retrieving - done')
             return self.PHOTO_DICT
         except Exception as e:
             logging.critical("Error occured: {}".format(e))

@@ -1,4 +1,5 @@
 vk.com photo saver
+==================
 
 # What is it?
 
@@ -12,10 +13,20 @@ At first for list of albums:
 
 Then download all photos from every album
 
-# How to run
-
--run __init__.py
-
 # What i need to start?
 - python 3.5
 
+# How to run
+
+- run __init__.py
+- copy connection string to your browser and get token
+- Fill config.py:
+.- API_TOKEN with token
+.- CLIENT_ID with your app id
+.- USER_ID with id of user, that hold photos
+- wait for result
+
+# Troubleshooting
+
+If you get a message with description "too many requests per second" - wait for a minute and try again.
+If you want to open a issue - add a stdout and vksaver.log.
