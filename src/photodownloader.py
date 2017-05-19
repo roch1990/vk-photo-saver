@@ -4,14 +4,13 @@ import logging
 import os
 import config
 
+
 class PhotoDownloader:
-    
-    
+
     def __init__(self):
         self.PHOTO_DICT = urlretriever.UrlRetriever().photo_list()
         self.DEFAULT_PATH = config.DEFAULT_PATH
         self.DEFAULT_FORMAT = config.DEFAULT_FORMAT
-
 
     def photo_downloading(self):
         print('Path to photo downloading:')
@@ -20,12 +19,14 @@ class PhotoDownloader:
         try:
             print('Downloading albums:')
             for key in self.PHOTO_DICT:
-                counter = 0 
+                counter = 0
                 print(key)
                 for item in self.PHOTO_DICT[key]:
                     photo = urllib.request.urlopen(item).read()
-                    output_file = open(os.path.join(self.DEFAULT_PATH, str(key) +
-                                                    str(counter) + self.DEFAULT_FORMAT),
+                    output_file = open(os.path.join(self.DEFAULT_PATH,
+                                                    str(key) +
+                                                    str(counter) +
+                                                    self.DEFAULT_FORMAT),
                                        "wb")
                     output_file.write(photo)
                     output_file.close()
@@ -36,9 +37,3 @@ class PhotoDownloader:
         except Exception as e:
             logging.exception("Error occured: {}".format(e))
             return False
-
-
-    def __folder_forming(self, key):
-        path = self.DEFAULT_PATH.join('join')
-        
-        return(path)

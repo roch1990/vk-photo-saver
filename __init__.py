@@ -3,7 +3,6 @@ import os
 import logging
 
 
-
 def path_to(main_path, *args):
     for name in args:
         sys.path.append(os.path.join(name))
@@ -20,11 +19,11 @@ if __name__ == '__main__':
             'src',
             'out',
             )
-    
+
     import config
     config.DEFAULT_PATH = os.path.join(main_path, 'out')
     print(config.DEFAULT_PATH)
-    
+
     # Token url forming
     import urlretriever
     print('Your url to get token string:')
@@ -33,4 +32,3 @@ if __name__ == '__main__':
     if (answer == 'Y'):
         import photodownloader
         print(photodownloader.PhotoDownloader().photo_downloading())
-    

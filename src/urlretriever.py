@@ -5,8 +5,8 @@ import logging
 # internal application library
 import config
 
-class UrlRetriever:
 
+class UrlRetriever:
 
     def __init__(self):
         '''Class constructor. No comments.'''
@@ -26,7 +26,6 @@ class UrlRetriever:
         self.PHOTO_DICT = {}
         self.TOKEN_STRING = config.token_string
 
-
     def token_string(self):
         self.TOKEN_STRING = self.TOKEN_STRING.format(self.CLIENT_ID,
                                                      self.REDIRECT_URI,
@@ -36,7 +35,6 @@ class UrlRetriever:
                                                      self.REVOKE)
         return self.TOKEN_STRING
 
-
     def albums_list(self):
         '''Bad code :('''
         try:
@@ -44,8 +42,9 @@ class UrlRetriever:
             counter = 0
             self.METHOD_GET = config.METHOD_GETALBUMS
             while counter < int(json_data['response']['count']):
-                self.ALBUM_DICT[json_data['response']['items'][counter]['id']] = \
-                                json_data['response']['items'][counter]['title']
+                self.ALBUM_DICT[
+                    json_data['response']['items'][counter]['id']] =
+                json_data['response']['items'][counter]['title']
                 counter += 1
             logging.info("Album formed: {}".format(self.ALBUM_DICT))
             print('Album list retrieving - done')
@@ -53,7 +52,6 @@ class UrlRetriever:
         except Exception as e:
             logging.critical("Error occured: {}".format(e))
             return self.ALBUM_DICT
-
 
     def photo_list(self):
         '''Don't do like this'''
@@ -79,29 +77,29 @@ class UrlRetriever:
                 while number < number_of_photos:
                     for key in photo_json['response']['items'][number]:
                         if key in self.PHOTO_RESOLUTION:
-                            photo_list.append(photo_json['response']['items'][number][key])
+                            photo_list.append(
+                                photo_json['response']['items'][number][key])
                     number += 1
                 self.PHOTO_DICT[self.ALBUM_DICT[item]] = photo_list
-                logging.info("Item:".format(self.PHOTO_DICT[self.ALBUM_DICT[item]]))
+                logging.info("Item:".format(
+                    self.PHOTO_DICT[self.ALBUM_DICT[item]]))
             print('Photo list retrieving - done')
             return self.PHOTO_DICT
         except Exception as e:
             logging.critical("Error occured: {}".format(e))
-            return self.PHOTO_DICT            
-
+            return self.PHOTO_DICT
 
     # private methods
-
     def __request_get(func):
         '''requests.get - no comments'''
         def wrapped(*args):
             get_querry = requests.get(func(*args))
             if get_querry.status_code != 200:
-                logging.waarning("Error, status code: {}".format(get_querry.status_code))
+                logging.waarning(
+                    "Error, status code: {}".format(get_querry.status_code))
                 return False
             return requests.get(func(*args))
         return wrapped
-
 
     def __request_text(func):
         '''Returning text from requests.get'''
@@ -115,20 +113,18 @@ class UrlRetriever:
             return json.dumps(func(*args), indent=4, sort_keys=True)
         return wrapped
 
-
-    #@__json_pretty        
+    # @__json_pretty
     @__request_text
     @__request_get
     def __get_album_request(self):
         '''Forming api request'''
         method_to_call = ((self.METHOD_NAME).format(self.METHOD_GET,
-                                                  self.USER_ID,
-                                                  self.PARAMS,
-                                                  self.API_TOKEN,
-                                                  self.V))
+                                                    self.USER_ID,
+                                                    self.PARAMS,
+                                                    self.API_TOKEN,
+                                                    self.V))
         return method_to_call
 
-    
     def __vk_api_photo_json(self, album_id):
         '''Forming pretty JSON with photo list'''
         self.PARAMS = '&album_id='+str(album_id)
