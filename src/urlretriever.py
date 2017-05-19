@@ -43,7 +43,7 @@ class UrlRetriever:
             self.METHOD_GET = config.METHOD_GETALBUMS
             while counter < int(json_data['response']['count']):
                 self.ALBUM_DICT[
-                    json_data['response']['items'][counter]['id']] =
+                    json_data['response']['items'][counter]['id']] = \
                 json_data['response']['items'][counter]['title']
                 counter += 1
             logging.info("Album formed: {}".format(self.ALBUM_DICT))
