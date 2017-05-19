@@ -18,15 +18,59 @@ Then download all photos from every album
 
 # How to run
 
+- Fill config.py with CLIENT_ID (your app id) and USER_ID (id of user, that hold photos)
 - run __init__.py
 - copy connection string to your browser and get token
-- Fill config.py:
-.- API_TOKEN with token
-.- CLIENT_ID with your app id
-.- USER_ID with id of user, that hold photos
+- Fill config.py API_TOKEN with token :)
 - wait for result
 
 # Troubleshooting
 
 If you get a message with description "too many requests per second" - wait for a minute and try again.
 If you want to open a issue - add a stdout and vksaver.log.
+
+# To do :
+
+- multiprocessing
+- restart, after crashing from last step of previous itteration
+- automatic token retrieving
+
+# Что это ?
+
+Не большой скрипт для загрузки фото с vk.com
+
+# Как это работает?
+
+- Парсятся альбомы пользователя
+- Парсятся фото в каждом альбоме
+- Составляется JSON вида `{'альбом' : ['список', 'фотографий']}`
+- Происходит загрузка фотографий в папку `./out`
+
+Общение с vk.com происходит посредством api.vk
+
+# Что мне нужно для запуска скрипта?
+- python 3.5
+
+# Как запустить?
+
+- Получить id приложения на страничке девелопера vk.com
+- Записать в `CLIENT_ID` модуля `config.py` id приложения
+- Записать в `USER_ID` модуля `config.py` id пользователя (фото которого вам нужны)
+- Запускайте `__init__.py`
+- Скопируйте строку подключения из консоли в адресную строку браузера и перейдите по ней
+- Скопируйте токен из полученной адресной строки в `API_TOKEN` модуля `config.py`
+- Введите `Y` нажмите `Enter`
+
+# Troubleshooting
+
+- Если у Вас не запустился скрипт с первого раза - запустите его повторно, возможно API_TOKEN не подхватился.
+- Если скрипт крашнулся во время выполнения - скорее всего vk.com отклонило запрос с ошибкой `to many requests per second`.
+Попробуйте запустить скрипт снова
+
+- Если хотите открыть issue - прикладывайте вывод vksaver.log и stdout.
+
+# Планы :
+
+- многопоточная загрузка
+- перезапуск после краша скрипта, с последнего шага
+- автоматическое получение токена
