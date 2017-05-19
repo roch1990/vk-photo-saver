@@ -27,7 +27,11 @@ if __name__ == '__main__':
     # Token url forming
     import urlretriever
     print('Your url to get token string:')
+    print()
     print(urlretriever.UrlRetriever().token_string())
+    print()
+    print('''Please copy this url to your browser, get token, write it in config.py and then restart script!''')
+    print()
     answer = input('Do you retrieve token ? Y/N\n')
     if (answer == 'Y'):
         import photodownloader
